@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "whats-new-reddit",
+  "version": "1.0",
+  "author": "Mr Speaker",
+  "description": "Auto-refresh and visual highlight of changes on reddit post pages",
+  "homepage_url": "https://github.com/mrspeaker",
+  "content_scripts": [{
+    "matches": ["https://www.reddit.com/r/*"],
+    "js": ["whats-new-reddit.js"]
+  }],
+  "options_ui": {
+    "page": "options.html"
+  },
+  "permissions": ["storage"]
+}
