@@ -20,7 +20,7 @@ function letsDoThis() {
 
   // Add settings/info button
   const firstPost = posts[0].get("el");
-  const onLoading = state => (button.textContent = state ? "..." : "[on]");
+  const onLoading = () => button.textContent = ". . .";
   const onToggle = () => {
     running = !running;
     button.textContent = running ? "[on]" : "[off]";
@@ -30,7 +30,8 @@ function letsDoThis() {
   // Poll for changes
   setInterval(() => {
     const dt = Date.now() - lastRefresh;
-    button.textContent = Math.max(0, ((refreshTime - dt) / 1000) | 0);
+    const stars = Math.max(0, 6 - ((dt / refreshTime) * 6 | 0));
+    button.textContent = new Array(stars).fill(".").join("") + " ";
     if (running && dt > refreshTime) {
       update(posts, onLoading);
     }
