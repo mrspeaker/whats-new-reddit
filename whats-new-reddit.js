@@ -37,24 +37,6 @@ function letsDoThis() {
     }
   }, 1000);
 
-  function update(currentPosts, onLoading) {
-    onLoading && onLoading(true);
-    lastRefresh = Date.now();
-    getPageDOM().then(getAndParsePosts).then(posts => {
-      onLoading && onLoading(false);
-      const prev = [...currentPosts];
-      posts.forEach((p, i) => {
-        p.set("rank", i);
-        const cur = currentPosts[i];
-        const curEl = cur.get("el");
-        const postEl = p.get("el");
-        curEl.parentNode.replaceChild(postEl, curEl);
-        currentPosts[i] = p;
-        highlightUpdates(p, prev);
-      });
-    });
-  }
-
   handleWindowFocus(hasFocus => {
     clearTimeout(focusTimerId);
     if (hasFocus) {
@@ -63,6 +45,24 @@ function letsDoThis() {
     } else {
       running = false;
     }
+  });
+}
+
+function update(currentPosts, onLoading) {
+  onLoading && onLoading(true);
+  lastRefresh = Date.now();
+  getPageDOM().then(getAndParsePosts).then(posts => {
+    onLoading && onLoading(false);
+    const prev = [...currentPosts];
+    posts.forEach((p, i) => {
+      p.set("rank", i);
+      const cur = currentPosts[i];
+      const curEl = cur.get("el");
+      const postEl = p.get("el");
+      curEl.parentNode.replaceChild(postEl, curEl);
+      currentPosts[i] = p;
+      highlightUpdates(p, prev);
+    });
   });
 }
 
