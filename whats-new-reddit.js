@@ -1,8 +1,8 @@
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
 
-const refreshTime = 30000;
-const pruneLocalStorageAfter = 2 * 24 * (60 * 60 * 1000); // prune every couple of days
+const refreshTime = 60000;
+const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 
 let running = true;
 let lastRefresh = Date.now();
@@ -19,18 +19,14 @@ function letsDoThis() {
   }
 
   // Add settings/info button
-  const firstPost = posts[0].get("el");
   const onLoading = () => button.textContent = ". . .";
-  const onToggle = () => {
-    running = !running;
-    button.textContent = running ? "[on]" : "[off]";
-  };
-  const button = addOnOffButton(firstPost, onToggle);
+  const button = addOnOffButton(posts[0].get("el"));
 
   // Poll for changes
   setInterval(() => {
     const dt = Date.now() - lastRefresh;
-    const stars = Math.max(0, 6 - ((dt / refreshTime) * 6 | 0));
+    const numStars = 6;
+    const stars = Math.max(0, (numStars - (dt / refreshTime) * numStars) | 0);
     button.textContent = new Array(stars).fill(".").join("") + " ";
     if (running && dt > refreshTime) {
       update(posts, onLoading);
@@ -49,10 +45,10 @@ function letsDoThis() {
 }
 
 function update(currentPosts, onLoading) {
-  onLoading && onLoading(true);
+  onLoading(true);
   lastRefresh = Date.now();
   getPageDOM().then(getAndParsePosts).then(posts => {
-    onLoading && onLoading(false);
+    onLoading(false);
     const prev = [...currentPosts];
     posts.forEach((p, i) => {
       p.set("rank", i);
@@ -110,13 +106,15 @@ function fetchFromLocalStorage() {
   return saved ? (saved.posts || []).map(p => new Map(p)) : [];
 }
 
-function addOnOffButton(beforeEl, onToggle) {
+function addOnOffButton(beforeEl) {
   const but = document.createElement("span");
-  but.textContent = "[on]";
+  but.textContent = "@mrspeaker";
   but.style.cursor = "pointer";
   but.style.color = "#555";
   but.style.font = "7pt monospace";
-  but.addEventListener("click", onToggle, false);
+  but.addEventListener("click", () => {
+    lastRefresh = Date.now() - refreshTime;
+  });
   beforeEl.parentNode.insertBefore(but, beforeEl);
   return but;
 }
@@ -176,7 +174,7 @@ function highlightUpdates(post, prevPosts) {
   if (post.get("comments") !== prev.get("comments")) {
     const diff = post.get("comments") - prev.get("comments");
     const commentEl = $(".comments", el);
-    commentEl.innerHTML += ` (${Math.sign(diff) === 1 ? "+" : ""}${diff})`;
+    commentEl.textContent += ` (${Math.sign(diff) === 1 ? "+" : ""}${diff})`;
   }
 }
 
