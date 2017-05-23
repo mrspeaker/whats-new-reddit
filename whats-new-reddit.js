@@ -1,9 +1,7 @@
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
 
-//browser.storage.sync.get("refresh").then(res=>...
-
-const refreshTime = 60000;
+const refreshTime = 60000; //browser.storage.sync.get("refresh").then(res=>...
 const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 
 let running = true;
@@ -21,15 +19,15 @@ function letsDoThis() {
   }
 
   // Add settings/info button
-  const onLoading = () => button.textContent = ". . .";
+  const onLoading = () => (button.textContent = ". . .");
   const button = addOnOffButton(posts[0].get("el"));
 
   // Poll for changes
   setInterval(() => {
     const dt = Date.now() - lastRefresh;
     const numStars = 6;
-    const stars = Math.max(0, (numStars - (dt / refreshTime) * numStars) | 0);
-    button.textContent = new Array(stars).fill(".").join("") + " ";
+    const stars = Math.max(0, (numStars - dt / refreshTime * numStars) | 0);
+    button.textContent = " " + new Array(stars).fill(".").join("");
     if (running && dt > refreshTime) {
       update(posts, onLoading);
     }
@@ -110,7 +108,7 @@ function fetchFromLocalStorage() {
 
 function addOnOffButton(beforeEl) {
   const but = document.createElement("span");
-  but.textContent = "@mrspeaker";
+  but.textContent = " ";
   but.style.cursor = "pointer";
   but.style.color = "#555";
   but.style.font = "7pt monospace";

@@ -1,6 +1,4 @@
 /* global browser */
-// from plugin call: runtime.openOptionsPage()
-
 function saveOptions(e) {
   browser.storage.sync.set({
     refreshTime: parseInt(document.querySelector("#refresh").value, 10)
