@@ -1,6 +1,8 @@
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
 
+//browser.storage.sync.get("refresh").then(res=>...
+
 const refreshTime = 60000;
 const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 
