@@ -16,9 +16,11 @@ Automatically updates and visually highlights what posts are new. Show's new pos
 
 ### Install for Firefox
 
-* (waiting for approval)... you can temp upload it via about:debugging
+* [Install from AMO](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/)... it's currently waiting for approval, but you can install it.
 
 ## Building
+
+If you want to play with the source and/or build for the stores.
 
 ### Chrome
 
@@ -35,10 +37,12 @@ Automatically updates and visually highlights what posts are new. Show's new pos
 
 ### Firefox
 
-* https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Publishing_your_WebExtension
+### For testing
+
+* about:debugging
+
+### For deploying
 
 1. zip up your add-on's files
-2. create an account on AMO
-3. upload your zip to AMO for signing and review, and choose whether to publish it in AMO or not
-4. fix any problems that are found in review
-5. if you chose not to publish on AMO, retrieve the signed add-on, and publish it yourself
+2. upload your zip to [AMO](https://addons.mozilla.org/en-US/developers/addons) for signing and review, and choose whether to publish it in AMO or not
+3. if you chose not to publish on AMO, retrieve the signed add-on, and publish it yourself
