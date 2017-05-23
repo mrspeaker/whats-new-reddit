@@ -13,7 +13,7 @@ Automatically updates and visually highlights what posts are new. Show's new pos
 ## Install
 
 * [Chrome WebStore](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai)
-* [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/) (currently waiting for approval, but you can install it)
+* [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/) (currently waiting for approval)
 
 ## Building
 
@@ -34,11 +34,11 @@ If you want to play with the source and/or build for the stores.
 
 ### Firefox
 
-### For testing
+#### For testing
 
 * about:debugging
 
-### For deploying
+#### For deploying
 
 1. zip up your add-on's files
 2. upload your zip to [AMO](https://addons.mozilla.org/en-US/developers/addons) for signing and review, and choose whether to publish it in AMO or not
