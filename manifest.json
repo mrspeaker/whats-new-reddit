@@ -13,6 +13,10 @@
     "page": "options.html"
   },
   "permissions": ["storage"],
+  "icons": {
+    "48": "wnr-48.png",
+    "96": "wnr-96.png"
+  },
   "applications": {
     "gecko": {
       "id": "{47995de1-53cb-44e2-b774-6fd431876836}"
