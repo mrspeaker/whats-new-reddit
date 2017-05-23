@@ -10,13 +10,10 @@ Automatically updates and visually highlights what posts are new. Show's new pos
 
 **This thing is in development... many rough edges abound**
 
-## Install for Chrome
+## Install
 
-* [Install from the webstore](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai)
-
-### Install for Firefox
-
-* [Install from AMO](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/)... it's currently waiting for approval, but you can install it.
+* [Chrome WebStore](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai)
+* [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/) (currently waiting for approval, but you can install it)
 
 ## Building
 
