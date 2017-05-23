@@ -10,19 +10,28 @@ Automatically updates and visually highlights what posts are new. Show's new pos
 
 **This thing is in development... many rough edges abound**
 
-## Install
+## Install for Chrome
 
-Dunno... working on that. I still have to pack it as a chrome/firefox extension.
+* [Install from the webstore](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai)
 
-YOu can load it in dev mode at the moment though... In firefox, go "about:debugging" and "load extension"... find the `manifest.json` and select it. Chrome it's extension "load unpacked extension". Haven't tested Edge.
+### Install for Firefox
 
+* (waiting for approval)... you can temp upload it via about:debugging
 
 ## Building
 
 ### Chrome
 
+#### For testing...
+
 * window -> extensions -> Pack extension...
 * Choose manifest.json directory, add private key.
+
+#### For deploying...
+
+* Copy key to dir, rename as key.pem.
+* Zip it up.
+* upload to https://chrome.google.com/webstore/developer/dashboard/
 
 ### Firefox
 

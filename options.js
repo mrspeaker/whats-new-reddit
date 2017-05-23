@@ -1,3 +1,4 @@
+/* global browser */
 // from plugin call: runtime.openOptionsPage()
 
 function saveOptions(e) {
