@@ -8,7 +8,7 @@ function saveOptions(e) {
 
 function restoreOptions() {
   browser.storage.sync.get("refresh").then(res => {
-    document.querySelector("#refresh").value = res.refreshTime || 60000;
+    document.querySelector("#refresh").value = res.refreshTime || 60;
   });
 }
 

@@ -1,7 +1,16 @@
+/* global browser */
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
 
-const refreshTime = 60000; //browser.storage.sync.get("refresh").then(res=>...
+let refreshTime = 60000;
+browser.storage.sync
+  .get("refreshTime")
+  .then(res => {
+    refreshTime = Math.max(3000, res.refreshTime * 1000);
+    letsDoThis();
+  })
+  .catch(letsDoThis);
+
 const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 
 let running = true;
@@ -199,5 +208,3 @@ function handleWindowFocus(onToggle) {
     onToggle(!document[hidden])
   );
 }
-
-letsDoThis();

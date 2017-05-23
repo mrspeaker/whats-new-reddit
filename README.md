@@ -1,14 +1,12 @@
 # What's New, Reddit?
 
-A webextension by Mr Speaker (@mrspeaker)
+A web extension by Mr Speaker (@mrspeaker)
 
 Never hit that F5 key again.
 
 Life coming at you too fast? Can't keep up with it all? You need *What's New, Reddit*.
 
 Automatically updates and visually highlights what posts are new. Show's new posts since your last visit and how many new comments there are on each post.
-
-**This thing is in development... many rough edges abound**
 
 ## Install
 
