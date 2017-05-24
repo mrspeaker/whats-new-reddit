@@ -3,9 +3,15 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
 
 let refreshTime = 60000;
+let knightrider = false;
 Settings.fetch().then(res => {
-  if (res && res.refreshTime) {
-    refreshTime = Math.max(3000, res.refreshTime * 1000);
+  if (res) {
+    if (res.refreshTime) {
+      refreshTime = Math.max(3000, res.refreshTime * 1000);
+    }
+    if (!res.knightridered) {
+      knightrider = true;
+    }
   }
   letsDoThis();
 });
@@ -21,6 +27,10 @@ function letsDoThis() {
   const posts = getAndParsePosts();
   if (!posts.length) return;
 
+  if (knightrider) {
+    doKnightRider(posts);
+  }
+
   // Update current page with any local storage info
   if (storedPosts.length) {
     posts.forEach(p => highlightUpdates(p, storedPosts));
@@ -35,7 +45,7 @@ function letsDoThis() {
     const dt = Date.now() - lastRefresh;
     const numStars = 6;
     const stars = Math.max(0, (numStars - dt / refreshTime * numStars) | 0);
-    button.textContent = " " + new Array(stars).fill(".").join("");
+    button.textContent = new Array(stars).fill(".").join("") || "_";
     if (running && dt > refreshTime) {
       update(posts, onLoading);
     }
@@ -68,6 +78,25 @@ function update(currentPosts, onLoading) {
       highlightUpdates(p, prev);
     });
   });
+}
+
+function doKnightRider(posts) {
+  Settings.save({
+    knightridered: true
+  });
+  setTimeout(() => {
+    posts.forEach((p, i) => {
+      const el = p.get("el");
+      const border = el.style.borderLeft;
+      el.style.borderLeft = "2px solid transparent";
+      setTimeout(() => {
+        el.style.borderLeft = "2px solid #FF6600";
+        setTimeout(() => {
+          el.style.borderLeft = border || "2px solid transparent";
+        }, 1200);
+      }, (i + 1) * 50);
+    });
+  }, 1500);
 }
 
 function saveToLocalStorage(posts) {
@@ -116,7 +145,7 @@ function fetchFromLocalStorage() {
 
 function addOnOffButton(beforeEl) {
   const but = document.createElement("span");
-  but.textContent = " ";
+  but.textContent = "_";
   but.style.cursor = "pointer";
   but.style.color = "#555";
   but.style.font = "7pt monospace";
