@@ -1,12 +1,12 @@
 # What's New, Reddit?
 
-A web extension by Mr Speaker (@mrspeaker)
-
-Never hit that F5 key again.
+A web extension by Mr Speaker ([@mrspeaker](http://twitter.com/mrspeaker))
 
 Life coming at you too fast? Can't keep up with it all? You need *What's New, Reddit*.
 
-Automatically updates and visually highlights what posts are new. Show's new posts since your last visit and how many new comments there are on each post.
+![screener-640](https://cloud.githubusercontent.com/assets/129330/26412713/a5b86712-4077-11e7-9c52-981cb6732524.jpg)
+
+Never hit that F5 key again. whats-new-reddit automatically updates and visually highlights what posts are new. Leave the page, comeback later - updates are now easy to spot. It also adds in how many new comments are new for each post.
 
 ## Install
 
@@ -19,14 +19,14 @@ If you want to play with the source and/or build for the stores.
 
 ### Chrome
 
-#### For testing...
+#### For testing
 
 * window -> extensions -> Pack extension...
-* Choose manifest.json directory, add private key.
+* Choose manifest.json directory, add private key (blank to create key).
 
-#### For deploying...
+#### For deploying
 
-* Copy key to dir, rename as key.pem.
+* Copy key to dir as `key.pem`.
 * Zip it up.
 * upload to https://chrome.google.com/webstore/developer/dashboard/
 
@@ -34,10 +34,10 @@ If you want to play with the source and/or build for the stores.
 
 #### For testing
 
-* about:debugging
+* about:debugging -> `Load Temporary Add-On`
 
 #### For deploying
 
-1. zip up your add-on's files
-2. upload your zip to [AMO](https://addons.mozilla.org/en-US/developers/addons) for signing and review, and choose whether to publish it in AMO or not
-3. if you chose not to publish on AMO, retrieve the signed add-on, and publish it yourself
+* zip up add-on files
+* upload to [AMO](https://addons.mozilla.org/en-US/developers/addons) for signing and review.
+
