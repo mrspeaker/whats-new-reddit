@@ -8,12 +8,9 @@ function saveOptions(e) {
 }
 
 function restoreOptions() {
-  Settings.fetch().then(
-    res => {
-      console.log("fetched!", res);
-      document.querySelector("#refresh").value = res.refreshTime || 60;
-    }
-  );
+  Settings.fetch().then(res => {
+    document.querySelector("#refresh").value = res.refreshTime || 60;
+  });
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
