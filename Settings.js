@@ -1,5 +1,5 @@
 /* global browser, chrome */
-/*eslint no-unused-vars: 0*/
+/* eslint no-unused-vars: 0 */
 const Settings = {
   fetch() {
     return new Promise(res => {

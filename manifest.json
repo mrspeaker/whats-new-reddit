@@ -1,7 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "whats-new-reddit",
-  "version": "1.0.7",
+  "name": "What's New, Reddit",
+  "short_name": "WNR",
+  "version": "1.0.8",
   "author": "Mr Speaker",
   "description": "Auto-refresh and visual highlight of changes on reddit post pages",
   "homepage_url": "https://github.com/mrspeaker/whats-new-reddit",
