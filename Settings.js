@@ -4,14 +4,14 @@ const Settings = {
   fetch() {
     return new Promise(res => {
       if (typeof browser !== "undefined") {
-        browser.storage.sync.get(null).then(res);
+        browser.storage.local.get(null).then(res);
       } else {
-        chrome.storage.sync.get(null, res);
+        chrome.storage.local.get(null, res);
       }
     });
   },
   save(options) {
     const b = typeof browser === "undefined" ? chrome : browser;
-    b.storage.sync.set(options);
+    b.storage.local.set(options);
   }
 };
