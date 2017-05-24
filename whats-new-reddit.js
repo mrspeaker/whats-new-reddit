@@ -80,25 +80,6 @@ function update(currentPosts, onLoading) {
   });
 }
 
-function doKnightRider(posts) {
-  Settings.save({
-    knightridered: true
-  });
-  setTimeout(() => {
-    posts.forEach((p, i) => {
-      const el = p.get("el");
-      const border = el.style.borderLeft;
-      el.style.borderLeft = "2px solid transparent";
-      setTimeout(() => {
-        el.style.borderLeft = "2px solid #FF6600";
-        setTimeout(() => {
-          el.style.borderLeft = border || "2px solid transparent";
-        }, 1200);
-      }, (i + 1) * 50);
-    });
-  }, 1500);
-}
-
 function saveToLocalStorage(posts) {
   const store = window.localStorage;
   if (!store) return;
@@ -235,4 +216,23 @@ function handleWindowFocus(onToggle) {
   document.addEventListener(visibilityChange, () =>
     onToggle(!document[hidden])
   );
+}
+
+function doKnightRider(posts) {
+  Settings.save({
+    knightridered: true
+  });
+  setTimeout(() => {
+    posts.forEach((p, i) => {
+      const el = p.get("el");
+      const border = el.style.borderLeft;
+      el.style.borderLeft = "2px solid transparent";
+      setTimeout(() => {
+        el.style.borderLeft = "2px solid #FF6600";
+        setTimeout(() => {
+          el.style.borderLeft = border || "2px solid transparent";
+        }, 1200);
+      }, (i + 1) * 50);
+    });
+  }, 1500);
 }
