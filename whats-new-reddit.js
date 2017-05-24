@@ -1,16 +1,14 @@
+/* global Settings */
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
 
 let refreshTime = 60000;
-const onRestore = res => {
-  refreshTime = Math.max(3000, res.refreshTime * 1000);
+Settings.fetch().then(res => {
+  if (res && res.refreshTime) {
+    refreshTime = Math.max(3000, res.refreshTime * 1000);
+  }
   letsDoThis();
-};
-if (window.browser) {
-  window.browser.storage.sync.get("refreshTime").then(onRestore);
-} else {
-  window.chrome.storage.sync.get("refreshTime", onRestore);
-}
+});
 
 const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 

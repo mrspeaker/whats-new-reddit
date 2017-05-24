@@ -1,17 +1,19 @@
+/* global Settings */
+
 function saveOptions(e) {
-  (window.browser || window.chrome).storage.sync.set({
+  e.preventDefault();
+  Settings.save({
     refreshTime: parseInt(document.querySelector("#refresh").value, 10)
   });
-  e.preventDefault();
 }
 
 function restoreOptions() {
-  const then = res => document.querySelector("#refresh").value = res.refreshTime || 60;
-  if (window.browser) {
-    window.browser.storage.sync.get("refreshTime").then(then);
-  } else {
-    window.chrome.storage.sync.get("refreshTime", then);
-  }
+  Settings.fetch().then(
+    res => {
+      console.log("fetched!", res);
+      document.querySelector("#refresh").value = res.refreshTime || 60;
+    }
+  );
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
