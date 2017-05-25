@@ -15,7 +15,7 @@ function saveOptions(e) {
   e.preventDefault();
 
   const colours = Object.keys(Settings.defaults.colours)
-    .map(id => ([id, $(`#${id}`).value]))
+    .map(id => [id, $(`#${id}`).value])
     .reduce((o, [key, val]) => {
       o[key] = val;
       return o;
@@ -30,14 +30,11 @@ function saveOptions(e) {
 }
 
 function restoreOptions() {
-  Object.entries(Settings.defaults.colours)
-    .forEach(([key, val]) => $(`#${key}`).value = val);
   Settings.fetch().then(res => {
     $("#refresh").value = res.refreshTime || 60;
-    if (res.colours) {
-      Object.entries(res.colours)
-        .forEach(([key, val]) => $(`#${key}`).value = val);
-    }
+    const colours = res.colours || Settings.defaults.colours || {};
+    Object.entries(colours)
+      .forEach(([key, val]) => $(`#${key}`).value = val);
   });
 }
 
