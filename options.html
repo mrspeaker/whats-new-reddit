@@ -15,9 +15,6 @@
       .number {
         width: 70px;
       }
-      .nope {
-        opacity: 0.5;
-      }
       #msg {
         display: inline-block;
         color: #ff6600;
@@ -30,13 +27,16 @@
           <label for="refresh">Refresh time (seconds)</label>
           <input class="number" type="number" id="refresh" />
         </div>
-        <div class="nope">
-          <label for="newPost">New Post</label><input type="color" value="#ff6600" id="newPost" disabled><br/>
-          <label for="progress">Progress Bar</label><input type="color" value="#CEE3F8" id="progress" disabled><br/>
-          <label for="progressEdge">New Post</label><input type="color" value="#5F99CF" id="progressEdge" disabled><br/>
+        <div>
+          <label for="newPost">New post</label><input type="color" id="newPost"><br/>
+          <label for="progress">Progress bar</label><input type="color" id="progress"><br/>
+          <label for="progressEdge">Progress edge</label><input type="color" id="progressEdge"><br/>
         </div>
         <br/>
+
         <button type="submit">Save</button>
+        <button id="btnReset">Reset to defaults</button>
+
         <p id="msg"></p>
     </form>
     <script src="Settings.js"></script>
