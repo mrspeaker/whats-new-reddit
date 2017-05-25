@@ -2,10 +2,33 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <style>
+      form {
+        padding: 6px;
+      }
+      form label {
+        display: inline-block;
+        width: 200px;
+        line-height: 30px;
+      }
+
+      .detail-row {
+
+      }
+      .nope {
+        opacity: 0.5;
+      }
+    </style>
   </head>
   <body>
     <form>
-        <label>Refresh time<input type="number" id="refresh"></label>(seconds)<br/>
+        <div class="detail-row"><label for="refresh">Refresh time</label><input type="number" id="refresh" />(seconds)</div>
+        <div class="nope">
+          <label for="newPost">New Post</label><input type="color" value="#ff6600" id="newPost" disabled><br/>
+          <label for="progress">Progress Bar</label><input type="color" value="#CEE3F8" id="progress" disabled><br/>
+          <label for="progressEdge">New Post</label><input type="color" value="#5F99CF" id="progressEdge" disabled><br/>
+        </div>
+        <br/>
         <button type="submit">Save</button>
         <p id="msg"></p>
     </form>

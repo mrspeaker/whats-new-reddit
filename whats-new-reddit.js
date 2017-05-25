@@ -8,6 +8,8 @@ let knightrider = false;
 let refreshTime = Settings.defaults.refreshTime * 1000;
 let colours = Settings.defaults.colours;
 
+console.log("oh ah");
+
 Settings.fetch().then(res => {
   if (res) {
     if (res.refreshTime) {
@@ -15,6 +17,7 @@ Settings.fetch().then(res => {
     }
     if (res.colours) {
       // replace colours...
+      Object.entries(res.colours).forEach((a,b,c) => console.log(a, b, c));
     }
     if (!res.knightridered) {
       knightrider = true;
