@@ -37,15 +37,15 @@ function letsDoThis() {
   }
 
   // Add settings/info button
-  const onLoading = () => (button.textContent = ". . .");
-  const button = addOnOffButton(posts[0].get("el"));
+  const onLoading = () => {}; // button.textContent = ". . .";
+  const ctx = addProgressBar(posts[0].get("el"));
 
   // Poll for changes
   setInterval(() => {
     const dt = Date.now() - lastRefresh;
-    const numStars = 6;
-    const stars = Math.max(0, (numStars - dt / refreshTime * numStars) | 0);
-    button.textContent = new Array(stars).fill(".").join("") || "_";
+    const perc = dt / refreshTime;
+    updateProgressBar(ctx, perc);
+
     if (running && dt > refreshTime) {
       update(posts, onLoading);
     }
@@ -60,6 +60,13 @@ function letsDoThis() {
       running = false;
     }
   });
+}
+
+function updateProgressBar(ctx, perc) {
+  perc = 1 - perc;
+  ctx.clearRect(0, 0, ctx.canvas.width + 1, ctx.canvas.height + 1);
+  ctx.fillRect(0, 0, ctx.canvas.width * perc | 0, ctx.canvas.height);
+  ctx.strokeRect(ctx.canvas.width * perc | 0, 0, 0, ctx.canvas.height);
 }
 
 function update(currentPosts, onLoading) {
@@ -124,17 +131,21 @@ function fetchFromLocalStorage() {
   return saved ? (saved.posts || []).map(p => new Map(p)) : [];
 }
 
-function addOnOffButton(beforeEl) {
-  const but = document.createElement("span");
-  but.textContent = "_";
-  but.style.cursor = "pointer";
-  but.style.color = "#555";
-  but.style.font = "7pt monospace";
-  but.addEventListener("click", () => {
+function addProgressBar(beforeEl) {
+  const can = document.createElement("canvas");
+  can.width = 30;
+  can.height = 8;
+  can.addEventListener("click", () => {
     lastRefresh = Date.now() - refreshTime;
   });
-  beforeEl.parentNode.insertBefore(but, beforeEl);
-  return but;
+  can.style.cursor = "pointer";
+
+  const ctx = can.getContext("2d");
+  ctx.fillStyle = "#CEE3F8";
+  ctx.strokeStyle = "#5F99CF";
+  updateProgressBar(ctx, -0.5); // hide the right line xD
+  beforeEl.parentNode.insertBefore(can, beforeEl);
+  return ctx;
 }
 
 function getPostsDOM(el) {
@@ -232,7 +243,7 @@ function doKnightRider(posts) {
         setTimeout(() => {
           el.style.borderLeft = border || "2px solid transparent";
         }, 1200);
-      }, (i + 1) * 50);
+      }, (i + 1) * 60);
     });
   }, 1500);
 }
