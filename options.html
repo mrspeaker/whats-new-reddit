@@ -12,17 +12,24 @@
         line-height: 30px;
       }
 
-      .detail-row {
-
+      .number {
+        width: 70px;
       }
       .nope {
         opacity: 0.5;
+      }
+      #msg {
+        display: inline-block;
+        color: #ff6600;
       }
     </style>
   </head>
   <body>
     <form>
-        <div class="detail-row"><label for="refresh">Refresh time</label><input type="number" id="refresh" />(seconds)</div>
+        <div>
+          <label for="refresh">Refresh time (seconds)</label>
+          <input class="number" type="number" id="refresh" />
+        </div>
         <div class="nope">
           <label for="newPost">New Post</label><input type="color" value="#ff6600" id="newPost" disabled><br/>
           <label for="progress">Progress Bar</label><input type="color" value="#CEE3F8" id="progress" disabled><br/>
