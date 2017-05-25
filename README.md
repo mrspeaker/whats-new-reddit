@@ -4,7 +4,7 @@ A web extension by Mr Speaker ([@mrspeaker](http://twitter.com/mrspeaker))
 
 Life coming at you too fast? Can't keep up with it all? You need *What's New, Reddit*.
 
-![screener-640](https://cloud.githubusercontent.com/assets/129330/26412713/a5b86712-4077-11e7-9c52-981cb6732524.jpg)
+![screener-640](https://cloud.githubusercontent.com/assets/129330/26464043/681ad646-4154-11e7-9e62-40e53716f0aa.jpg)
 
 Never hit that F5 key again. whats-new-reddit automatically updates and visually highlights what posts are new. Leave the page, comeback later - updates are now easy to spot. It also adds in how many new comments are new for each post.
 
@@ -40,4 +40,3 @@ If you want to play with the source and/or build for the stores.
 
 * zip up add-on files
 * upload to [AMO](https://addons.mozilla.org/en-US/developers/addons) for signing and review.
-
