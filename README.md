@@ -1,6 +1,6 @@
 # What's New, Reddit?
 
-A web extension by Mr Speaker ([@mrspeaker](http://twitter.com/mrspeaker))
+A [Chrome](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/) web extension by Mr Speaker ([@mrspeaker](http://twitter.com/mrspeaker))
 
 Life coming at you too fast? Can't keep up with it all? You need *What's New, Reddit*.
 
@@ -17,7 +17,7 @@ Never hit that F5 key again. whats-new-reddit automatically updates and visually
 
 ![options](https://cloud.githubusercontent.com/assets/129330/26464649/8a68e006-4156-11e7-8a0b-c47750464390.png)
 
-* Refresh Time: how frequently (in seconds) the page will auto-refresh. 
+* Refresh Time: how frequently (in seconds) the page will auto-refresh.
 * Colors:
   * New Post: the highlight colour for new posts
   * Progress bar: the small "loading bar" at the top of the page
