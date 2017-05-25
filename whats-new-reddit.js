@@ -1,6 +1,11 @@
 /* global Settings */
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
+const colours = {
+  newPost: "#ff6600",
+  progress: "#CEE3F8",
+  progressEdge: "#5F99CF"
+};
 
 let refreshTime = 60000;
 let knightrider = false;
@@ -64,9 +69,10 @@ function letsDoThis() {
 
 function updateProgressBar(ctx, perc) {
   perc = 1 - perc;
-  ctx.clearRect(0, 0, ctx.canvas.width + 1, ctx.canvas.height + 1);
-  ctx.fillRect(0, 0, ctx.canvas.width * perc | 0, ctx.canvas.height);
-  ctx.strokeRect(ctx.canvas.width * perc | 0, 0, 0, ctx.canvas.height);
+  const { width, height } = ctx.canvas;
+  ctx.clearRect(0, 0, width + 1, height + 1);
+  ctx.fillRect(0, 0, (width * perc) | 0, height);
+  ctx.strokeRect((width * perc) | 0, 0, 0, height);
 }
 
 function update(currentPosts, onLoading) {
@@ -141,8 +147,8 @@ function addProgressBar(beforeEl) {
   can.style.cursor = "pointer";
 
   const ctx = can.getContext("2d");
-  ctx.fillStyle = "#CEE3F8";
-  ctx.strokeStyle = "#5F99CF";
+  ctx.fillStyle = colours.progress;
+  ctx.strokeStyle = colours.progressEdge;
   updateProgressBar(ctx, -0.5); // hide the right line xD
   beforeEl.parentNode.insertBefore(can, beforeEl);
   return ctx;
@@ -196,7 +202,7 @@ function highlightUpdates(post, prevPosts) {
 
   if (!prev) {
     // New post
-    el.style.borderLeft = "2px solid #FF6600";
+    el.style.borderLeft = `2px solid ${colours.newPost}`;
     return;
   }
 
@@ -239,7 +245,7 @@ function doKnightRider(posts) {
       const border = el.style.borderLeft;
       el.style.borderLeft = "2px solid transparent";
       setTimeout(() => {
-        el.style.borderLeft = "2px solid #FF6600";
+        el.style.borderLeft = `2px solid ${colours.newPost}`;
         setTimeout(() => {
           el.style.borderLeft = border || "2px solid transparent";
         }, 1200);
