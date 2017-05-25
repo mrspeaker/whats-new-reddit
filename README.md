@@ -11,7 +11,7 @@ Never hit that F5 key again. whats-new-reddit automatically updates and visually
 ## Install
 
 * [Chrome WebStore](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai)
-* [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/) (currently waiting for approval)
+* [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/)
 
 ## Options
 
