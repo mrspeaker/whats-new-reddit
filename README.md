@@ -13,9 +13,19 @@ Never hit that F5 key again. whats-new-reddit automatically updates and visually
 * [Chrome WebStore](https://chrome.google.com/webstore/detail/whats-new-reddit/lmfhahhaacglnpjlfincodafedalgeai)
 * [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/whats-new-reddit/) (currently waiting for approval)
 
+## Options
+
+![options](https://cloud.githubusercontent.com/assets/129330/26464649/8a68e006-4156-11e7-8a0b-c47750464390.png)
+
+* Refresh Time: how frequently (in seconds) the page will auto-refresh. 
+* Colors:
+  * New Post: the highlight colour for new posts
+  * Progress bar: the small "loading bar" at the top of the page
+  * Progress edge: the "edge" line of the loading bar
+
 ## Building
 
-If you want to play with the source and/or build for the stores.
+If you want to play with the source code and/or build for the stores.
 
 ### Chrome
 
