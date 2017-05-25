@@ -1,18 +1,20 @@
 /* global Settings */
+
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
-const colours = {
-  newPost: "#ff6600",
-  progress: "#CEE3F8",
-  progressEdge: "#5F99CF"
-};
+const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 
-let refreshTime = 60000;
 let knightrider = false;
+let refreshTime = Settings.defaults.refreshTime * 1000;
+let colours = Settings.defaults.colours;
+
 Settings.fetch().then(res => {
   if (res) {
     if (res.refreshTime) {
       refreshTime = Math.max(3000, res.refreshTime * 1000);
+    }
+    if (res.colours) {
+      // replace colours...
     }
     if (!res.knightridered) {
       knightrider = true;
@@ -20,8 +22,6 @@ Settings.fetch().then(res => {
   }
   letsDoThis();
 });
-
-const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
 
 let running = true;
 let lastRefresh = Date.now();

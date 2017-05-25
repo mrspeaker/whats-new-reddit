@@ -13,5 +13,13 @@ const Settings = {
   save(options) {
     const b = typeof browser === "undefined" ? chrome : browser;
     b.storage.local.set(options);
+  },
+  defaults: {
+    refreshTime: 60,
+    colours: {
+      newPost: "#ff6600",
+      progress: "#CEE3F8",
+      progressEdge: "#5F99CF"
+    }
   }
 };
