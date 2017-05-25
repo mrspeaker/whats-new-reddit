@@ -37,13 +37,13 @@ function letsDoThis() {
   }
 
   // Add settings/info button
-  const onLoading = () => {}; // button.textContent = ". . .";
+  const onLoading = () => {};
   const ctx = addProgressBar(posts[0].get("el"));
 
   // Poll for changes
   setInterval(() => {
     const dt = Date.now() - lastRefresh;
-    const perc = dt / refreshTime;
+    const perc = Math.max(0, Math.min(1, dt / refreshTime));
     updateProgressBar(ctx, perc);
 
     if (running && dt > refreshTime) {
