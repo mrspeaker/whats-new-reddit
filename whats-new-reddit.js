@@ -1,12 +1,16 @@
 /* global Settings */
-
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel) || []);
 const $ = (sel, ctx) => $$(sel, ctx)[0];
-const pruneLocalStorageAfter = 1.5 * 24 * (60 * 60 * 1000); // prune every couple of days
+const pruneSubsAfter = 1.5 * 24 * 60 * 60 * 1000; // prune every couple of days
+const prunePostsAfter = 60 * 60 * 1000; // buffer when posts drop-off/return
 
 let knightrider = false;
 let refreshTime = Settings.defaults.refreshTime * 1000;
 let colours = Settings.defaults.colours;
+
+let running = true;
+let lastRefresh = Date.now();
+let focusTimerId;
 
 Settings.fetch().then(res => {
   if (res) {
@@ -26,12 +30,8 @@ Settings.fetch().then(res => {
   letsDoThis();
 });
 
-let running = true;
-let lastRefresh = Date.now();
-let focusTimerId;
-
 function letsDoThis() {
-  const storedPosts = fetchFromLocalStorage();
+  const storedPosts = fetchFromStorage();
   const posts = getAndParsePosts();
   if (!posts.length) return;
 
@@ -42,6 +42,7 @@ function letsDoThis() {
   // Update current page with any local storage info
   if (storedPosts.length) {
     posts.forEach(p => highlightUpdates(p, storedPosts));
+    pruneOldPostsFromStorage();
   }
 
   // Add settings/info button
@@ -96,65 +97,85 @@ function update(currentPosts, onLoading) {
   });
 }
 
-function saveToLocalStorage(posts) {
-  const store = window.localStorage;
-  if (!store) return;
-  const kvPosts = posts.map(post => {
-    return [
-      ["fullname", post.get("fullname")],
-      ["comments", post.get("comments")]
-    ];
-  });
-
-  const diffs = JSON.parse(store.getItem("diffs"));
-  diffs[window.location] = {
-    posts: kvPosts,
-    timestamp: Date.now()
-  };
-  store.setItem("diffs", JSON.stringify(diffs));
+function deserialize() {
+  return JSON.parse(window.localStorage.getItem("diffs"));
+}
+function serialize(obj) {
+  window.localStorage.setItem("diffs", JSON.stringify(obj));
+  return obj;
 }
 
-function fetchFromLocalStorage() {
-  const store = window.localStorage;
-  if (!store) return;
-  if (!store.getItem("diffs")) {
-    // Init if not set
-    store.setItem("diffs", JSON.stringify({}));
-  }
-  const diffs = JSON.parse(store.getItem("diffs"));
+function saveToStorage(posts) {
+  const now = Date.now();
+  const newPosts = posts.map(post => {
+    return [
+      ["fullname", post.get("fullname")],
+      ["comments", post.get("comments")],
+      ["timestamp", now]
+    ];
+  });
+  const getKey = ([fullname]) => fullname[1];
+  const makeMapEntry = arr => (arr.length ? [getKey(arr), arr] : arr);
 
-  // Prune sites older than X
+  const stored = deserialize();
+  const subReddit = stored[window.location];
+  const existingPosts = subReddit ? subReddit.posts : [];
+  const merged = new Map([
+    ...existingPosts.map(makeMapEntry),
+    ...newPosts.map(makeMapEntry)
+  ]);
+  const flattened = [...merged].map(([, val]) => val);
+  stored[window.location] = {
+    posts: flattened,
+    timestamp: now
+  };
+  serialize(stored);
+}
+
+function fetchFromStorage() {
+  let diffs = deserialize();
+  if (!diffs) {
+    diffs = serialize({}); // init empty store
+  }
+
+  // Prune subreddits and comments older than X
   let pruned = false;
   for (let key in diffs) {
-    if (Date.now() - diffs[key].timestamp > pruneLocalStorageAfter) {
+    const subReddit = diffs[key];
+    if (Date.now() - subReddit.timestamp > pruneSubsAfter) {
       delete diffs[key];
       pruned = true;
     }
   }
+
   if (pruned) {
-    store.setItem("diffs", JSON.stringify(diffs));
+    serialize(diffs);
   }
 
-  // Return posts for current URL
   const saved = diffs[window.location];
-  return saved ? (saved.posts || []).map(p => new Map(p)) : [];
+  return saved ? saved.posts.map(p => new Map(p)) : [];
 }
 
-function addProgressBar(beforeEl) {
-  const can = document.createElement("canvas");
-  can.width = 30;
-  can.height = 8;
-  can.addEventListener("click", () => {
-    lastRefresh = Date.now() - refreshTime;
+/*
+  Because posts can frequently "drop-off" a page, and then return,
+  we store all posts in localstorage. This would quickly add up to
+  a lot of posts, so purge them after a while.
+*/
+function pruneOldPostsFromStorage() {
+  let pruned = false;
+  const diffs = deserialize();
+  const saved = diffs[window.location];
+  saved.posts = saved.posts.filter(([, , timestamp]) => {
+    const age = Date.now() - parseInt(timestamp[1], 10);
+    const isOld = age > prunePostsAfter;
+    if (isOld) {
+      pruned = true;
+    }
+    return !isOld;
   });
-  can.style.cursor = "pointer";
-
-  const ctx = can.getContext("2d");
-  ctx.fillStyle = colours.progress;
-  ctx.strokeStyle = colours.progressEdge;
-  updateProgressBar(ctx, -0.5); // hide the right line xD
-  beforeEl.parentNode.insertBefore(can, beforeEl);
-  return ctx;
+  if (pruned) {
+    serialize(diffs);
+  }
 }
 
 function getPostsDOM(el) {
@@ -181,7 +202,7 @@ function getAndParsePosts(el = document) {
   if (posts.length <= 1) {
     return [];
   }
-  saveToLocalStorage(posts);
+  saveToStorage(posts);
   return posts;
 }
 
@@ -214,6 +235,23 @@ function highlightUpdates(post, prevPosts) {
     const commentEl = $(".comments", el);
     commentEl.textContent += ` (${Math.sign(diff) === 1 ? "+" : ""}${diff})`;
   }
+}
+
+function addProgressBar(beforeEl) {
+  const can = document.createElement("canvas");
+  can.width = 30;
+  can.height = 8;
+  can.addEventListener("click", () => {
+    lastRefresh = Date.now() - refreshTime;
+  });
+  can.style.cursor = "pointer";
+
+  const ctx = can.getContext("2d");
+  ctx.fillStyle = colours.progress;
+  ctx.strokeStyle = colours.progressEdge;
+  updateProgressBar(ctx, -0.5); // hide the right line xD
+  beforeEl.parentNode.insertBefore(can, beforeEl);
+  return ctx;
 }
 
 function handleWindowFocus(onToggle) {
