@@ -18,10 +18,7 @@ Settings.fetch().then(res => {
       refreshTime = Math.max(3000, res.refreshTime * 1000);
     }
     if (res.colours) {
-      // replace colours...
-      Object.entries(res.colours).forEach(([key, val]) => {
-        colours[key] = val;
-      });
+      Object.entries(res.colours).forEach(([key, val]) => (colours[key] = val));
     }
     if (!res.knightridered) {
       knightrider = true;
@@ -35,6 +32,7 @@ function letsDoThis() {
   const posts = getAndParsePosts();
   if (!posts.length) return;
 
+  // Initial "plugin is installed" effect
   if (knightrider) {
     doKnightRider(posts);
   }
@@ -45,8 +43,7 @@ function letsDoThis() {
     pruneOldPostsFromStorage();
   }
 
-  // Add settings/info button
-  const onLoading = () => {};
+  // Add progress bar graphic
   const ctx = addProgressBar(posts[0].get("el"));
 
   // Poll for changes
@@ -56,7 +53,7 @@ function letsDoThis() {
     updateProgressBar(ctx, perc);
 
     if (running && dt > refreshTime) {
-      update(posts, onLoading);
+      update(posts);
     }
   }, 1000);
 
@@ -79,11 +76,9 @@ function updateProgressBar(ctx, perc) {
   ctx.strokeRect((width * perc) | 0, 0, 0, height);
 }
 
-function update(currentPosts, onLoading) {
-  onLoading(true);
+function update(currentPosts) {
   lastRefresh = Date.now();
   getPageDOM().then(getAndParsePosts).then(posts => {
-    onLoading(false);
     const prev = [...currentPosts];
     posts.forEach((p, i) => {
       p.set("rank", i);
@@ -100,6 +95,7 @@ function update(currentPosts, onLoading) {
 function deserialize() {
   return JSON.parse(window.localStorage.getItem("diffs"));
 }
+
 function serialize(obj) {
   window.localStorage.setItem("diffs", JSON.stringify(obj));
   return obj;
@@ -207,9 +203,7 @@ function getAndParsePosts(el = document) {
 }
 
 function getPageDOM() {
-  return fetch(window.location, {
-    credentials: "same-origin"
-  })
+  return fetch(window.location, { credentials: "same-origin" })
     .then(r => r.text())
     .then(r => {
       const div = document.createElement("div");
@@ -280,6 +274,7 @@ function doKnightRider(posts) {
   Settings.save({
     knightridered: true
   });
+
   setTimeout(() => {
     posts.forEach((p, i) => {
       const el = p.get("el");
