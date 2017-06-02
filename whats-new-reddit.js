@@ -12,20 +12,22 @@ let running = true;
 let lastRefresh = Date.now();
 let focusTimerId;
 
-Settings.fetch().then(res => {
-  if (res) {
-    if (res.refreshTime) {
-      refreshTime = Math.max(3000, res.refreshTime * 1000);
-    }
-    if (res.colours) {
-      Object.entries(res.colours).forEach(([key, val]) => (colours[key] = val));
-    }
-    if (!res.knightridered) {
-      knightrider = true;
-    }
+// Get things started
+Settings.fetch()
+  .then(applySettings)
+  .then(letsDoThis);
+
+function applySettings(res = {}) {
+  if (res.refreshTime) {
+    refreshTime = Math.max(3000, res.refreshTime * 1000);
   }
-  letsDoThis();
-});
+  if (res.colours) {
+    Object.entries(res.colours).forEach(([key, val]) => (colours[key] = val));
+  }
+  if (!res.knightridered) {
+    knightrider = true;
+  }
+}
 
 function letsDoThis() {
   const storedPosts = fetchFromStorage();
@@ -69,11 +71,11 @@ function letsDoThis() {
 }
 
 function updateProgressBar(ctx, perc) {
-  perc = 1 - perc;
+  const progress = 1 - perc;
   const { width, height } = ctx.canvas;
   ctx.clearRect(0, 0, width + 1, height + 1);
-  ctx.fillRect(0, 0, (width * perc) | 0, height);
-  ctx.strokeRect((width * perc) | 0, 0, 0, height);
+  ctx.fillRect(0, 0, (width * progress) | 0, height);
+  ctx.strokeRect((width * progress) | 0, 0, 0, height);
 }
 
 function update(currentPosts) {
