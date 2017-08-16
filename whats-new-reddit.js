@@ -256,24 +256,22 @@ function addProgressBar(beforeEl) {
 
 function handleWindowFocus(onToggle) {
   // From MDN docs
-  let hidden, visibilityChange;
+  let hidden, change;
   if (typeof document.hidden !== "undefined") {
     hidden = "hidden";
-    visibilityChange = "visibilitychange";
+    change = "visibilitychange";
   } else if (typeof document.msHidden !== "undefined") {
     hidden = "msHidden";
-    visibilityChange = "msvisibilitychange";
+    change = "msvisibilitychange";
   } else if (typeof document.webkitHidden !== "undefined") {
     hidden = "webkitHidden";
-    visibilityChange = "webkitvisibilitychange";
+    change = "webkitvisibilitychange";
   }
   if (typeof document[hidden] === "undefined") {
     return; // Things will update, even in background
   }
 
-  document.addEventListener(visibilityChange, () =>
-    onToggle(!document[hidden])
-  );
+  document.addEventListener(change, () => onToggle(!document[hidden]));
 }
 
 function doKnightRider(posts) {
