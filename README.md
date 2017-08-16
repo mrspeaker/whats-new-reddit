@@ -36,6 +36,7 @@ If you want to play with the source code and/or build for the stores.
 
 #### For deploying
 
+* Remove the "application id" from manifest.json (only needed for FF - will automate this at some stage)
 * Copy key to dir as `key.pem`.
 * Zip it up.
 * upload to https://chrome.google.com/webstore/developer/dashboard/

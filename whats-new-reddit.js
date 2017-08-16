@@ -84,10 +84,15 @@ function update(currentPosts) {
       p.set("rank", i);
       const cur = currentPosts[i];
       const curEl = cur.get("el");
+      curEl.style.borderLeft = "2px solid transparent";
+
       const postEl = p.get("el");
-      curEl.parentNode.replaceChild(postEl, curEl);
       currentPosts[i] = p;
-      highlightUpdates(p, prev);
+
+      setTimeout(() => {
+        curEl.parentNode.replaceChild(postEl, curEl);
+        highlightUpdates(p, prev);
+      }, 800);
     });
   });
 }
