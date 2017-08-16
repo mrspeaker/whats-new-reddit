@@ -13,9 +13,7 @@ let lastRefresh = Date.now();
 let focusTimerId;
 
 // Get things started
-Settings.fetch()
-  .then(applySettings)
-  .then(letsDoThis);
+Settings.fetch().then(applySettings).then(letsDoThis);
 
 function applySettings(res = {}) {
   if (res.refreshTime) {
@@ -222,7 +220,13 @@ function highlightUpdates(post, prevPosts) {
 
   if (!prev) {
     // New post
-    el.style.borderLeft = `2px solid ${colours.newPost}`;
+    el.style.borderLeft = "2px solid transparent";
+    setTimeout(() => {
+      el.classList.add("wnr-fade");
+      setTimeout(() => {
+        el.style.borderLeft = `2px solid ${colours.newPost}`;
+      }, 17);
+    }, 17);
     return;
   }
 
@@ -283,10 +287,11 @@ function doKnightRider(posts) {
       const border = el.style.borderLeft;
       el.style.borderLeft = "2px solid transparent";
       setTimeout(() => {
+        el.classList.add("wnr-fade");
         el.style.borderLeft = `2px solid ${colours.newPost}`;
         setTimeout(() => {
           el.style.borderLeft = border || "2px solid transparent";
-        }, 1200);
+        }, 1400);
       }, (i + 1) * 60);
     });
   }, 1500);

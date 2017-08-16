@@ -2,13 +2,14 @@
   "manifest_version": 2,
   "name": "What's New, Reddit",
   "short_name": "WNR",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "author": "Mr Speaker",
   "description": "Auto-refresh and visual highlight of changes on reddit post pages",
   "homepage_url": "https://github.com/mrspeaker/whats-new-reddit",
   "content_scripts": [{
     "matches": ["https://www.reddit.com/r/*", "https://www.reddit.com/"],
-    "js": ["Settings.js", "whats-new-reddit.js"]
+    "js": ["Settings.js", "whats-new-reddit.js"],
+    "css": ["styles.css"]
   }],
   "options_ui": {
     "page": "options.html"
