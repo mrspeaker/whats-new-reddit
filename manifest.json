@@ -7,7 +7,7 @@
   "description": "Auto-refresh and visual highlight of changes on reddit post pages",
   "homepage_url": "https://github.com/mrspeaker/whats-new-reddit",
   "content_scripts": [{
-    "matches": ["https://www.reddit.com/r/*", "https://www.reddit.com/"],
+    "matches": ["https://www.reddit.com/r/*", "https://www.reddit.com/", "https://www.reddit.com/*/m/*"],
     "js": ["Settings.js", "whats-new-reddit.js"],
     "css": ["styles.css"]
   }],
