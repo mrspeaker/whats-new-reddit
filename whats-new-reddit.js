@@ -208,7 +208,7 @@ function getAndParsePosts(el = document) {
 }
 
 function getPageDOM() {
-  return fetch(window.location, { credentials: "same-origin" })
+  return fetch(window.location, { credentials: "include" })
     .then(r => r.text())
     .then(r => {
       const div = document.createElement("div");
